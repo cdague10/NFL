@@ -13,10 +13,6 @@ library(tidymodels)
 pbp <- load_pbp(2004:2024)
 names(pbp)
 
-# Select just a couple columns to look at
-pbp |> select(posteam, defteam, down, ydstogo, play_type, yards_gained, cpoe, air_epa,punter_player_name,epa)
-
-# Let's just get runs and passes
 pbp_2pt <- pbp %>%
   filter(!is.na(play_type)) %>%
   filter(play_type != "kickoff") %>%
@@ -294,3 +290,4 @@ gt_table <- gt(data) %>%
 
 # Display the table
 gt_table
+
