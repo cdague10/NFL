@@ -6,7 +6,6 @@ library(ggimage)
 library(dplyr)
 library(gt)
 
-#Combine ftn and pbp together
 ftn <- load_ftn_charting(season = 2024)
 ftn <- ftn %>% dplyr::select(nflverse_game_id,ftn_play_id:is_qb_fault_sack) %>%
   dplyr::rename(game_id = nflverse_game_id, play_id = nflverse_play_id)
@@ -168,3 +167,4 @@ motion_epa %>%
         plot.title=element_text(size=16, face="bold", hjust=0.5),
         plot.subtitle = element_text(size=12,hjust=0.5),
         panel.grid.major.y = element_line(size=0.1))
+
