@@ -7,6 +7,8 @@ NFL_Draft_Analysis- WR career analysis by draft pick position, RB epa by draft p
                                  
 NFL_Edge - Combined PFF Data for all edge defender stats. Top 10 in sacks are compared in key categories 
 
+NFL_Fantasy_2025- Fantasy Draft optimizer (Pre-draft), bounds set for each round/pick, range is loosened as draft goes on for realistic experience
+
 NFL_Kicker- Comparing the FG game difference from the 2000s to 2020s, in addition to an expected vs actual points stufy for 2024 NFL kickers
 
 NFL_OL- Weighted average of all OL positions for each team, displayed in descending order for previous year
