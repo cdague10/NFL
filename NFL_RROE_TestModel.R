@@ -6,7 +6,7 @@ library(ggplot2)
 library(dplyr)
 library(stringr)
 library(xgboost)
-library(caret) # for train/test split and performance
+library(caret)
 
 pbp <- load_pbp(2024)
 
@@ -28,11 +28,11 @@ split <- initial_split(pbp_clean, prop = 0.8)
 train <- training(split)
 test <- testing(split)
 
-# Train a logistic regression model
+# Train 
 rush_model <- glm(is_rush ~ down + ydstogo + qtr + shotgun + no_huddle + score_diff,
                   data = train, family = "binomial")
 
-# Predict expected rush probabilities
+# Test
 test <- test %>%
   mutate(expected_rush_prob = predict(rush_model, newdata = test, type = "response"))
 
@@ -44,10 +44,6 @@ rroe_team <- test %>%
     RROE = actual_rush_rate - expected_rush_rate
   ) %>%
   arrange(desc(RROE))
-
-
-
-
 
 
 
@@ -66,7 +62,6 @@ pbp_clean <- pbp %>%
   select(posteam, is_rush, down, ydstogo, qtr, shotgun, no_huddle, score_diff, half_seconds_remaining, game_seconds_remaining)
 
 #Prepare data for Xgboost
-# One-hot encode factors
 dummies <- dummyVars(~ down + qtr, data = pbp_clean)
 dummy_mat <- predict(dummies, pbp_clean)
 
@@ -115,7 +110,7 @@ xgb_model <- xgb.train(
   verbose = 0
 )
 
-#Calculate Expected RR
+#Expected RR
 expected_rush_prob <- predict(xgb_model, dtest)
 
 #Calculate RROE
@@ -125,6 +120,7 @@ results <- tibble(
   expected_rush_prob = expected_rush_prob
 )
 
+#Display Table
 rroe_team <- results %>%
   group_by(posteam) %>%
   summarise(
@@ -134,3 +130,4 @@ rroe_team <- results %>%
     n_plays = n()
   ) %>%
   arrange(desc(RROE))
+
