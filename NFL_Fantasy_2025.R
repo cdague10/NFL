@@ -33,7 +33,7 @@ Fantasy_CheatSheet <- FantasyPros_2025_Overall_ADP_Rankings %>%
 
 
 
-#Fantasy Draft Picks
+#Hypothetical Fantasy Draft Picks (First Pick- 10 person snake drake)
 my_picks <- c(1, 20, 21, 40, 41, 60, 61)
 drafted_players <- character()
 final_team <- data.frame()
@@ -180,3 +180,4 @@ gt_table <- final_table %>%
   )
 
 gt_table
+
