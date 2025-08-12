@@ -65,7 +65,7 @@ pbp_punt_plot <- pbp_punt %>%
                                     pull(punter_player_name))) %>%
   left_join(teams_colors_logos, by = c("posteam" = "team_abbr"))
 
-# Boxplot
+#Plot
 ggplot(pbp_punt_plot, aes(x = fct_reorder(punter_player_name, punt_percentile, .fun = median, .desc=TRUE),
                           y = punt_percentile)) +
   geom_boxplot(aes(fill = team_color, color = team_color2), width = 0.6, outlier.shape = NA) +
@@ -81,3 +81,4 @@ ggplot(pbp_punt_plot, aes(x = fct_reorder(punter_player_name, punt_percentile, .
         plot.subtitle = element_text(size = 12, hjust = 0.5),
         axis.text.x = element_text(angle = 45, hjust = 1),
         panel.grid.major.y = element_line(size = 0.2))
+
