@@ -110,12 +110,8 @@ ol_table
 
 
 
-
-
-
-
-
-
+#Second setup
+#16 teams on left, 16 teams on right
 left_half <- team_ol_grades %>%
   arrange(desc(overall_ol_grade)) %>%
   slice(1:16) %>%
@@ -127,20 +123,16 @@ right_half <- team_ol_grades %>%
   select(team_logo_wiki, lt_grade, lg_grade, ce_grade, rg_grade, rt_grade) %>%
   rename_with(~ paste0(., "_r"), everything())
 
-# Combine the two sides
 split_table <- bind_cols(left_half, right_half)
 
-# Create gt table
 gt_table <- split_table %>%
   gt() %>%
 
-  # Titles
   tab_header(
     title = md("**Top Offensive Lines in 2024 (Split View)**"),
     subtitle = md("Weighted Average by Position | Stats: PFF | By: Connor Dague")
   ) %>%
 
-  # Style title and body
   tab_style(
     style = cell_text(weight = "bold", size = px(18)),
     locations = cells_title(groups = "title")
@@ -154,7 +146,6 @@ gt_table <- split_table %>%
     locations = cells_body()
   ) %>%
 
-  # Team logos on both sides
   text_transform(
     locations = cells_body(columns = team_logo_wiki),
     fn = function(x) {
@@ -167,22 +158,16 @@ gt_table <- split_table %>%
       web_image(url = x, height = 20)
     }
   ) %>%
-
-  # Column alignment
   cols_align(
     align = "center",
     columns = everything()
   ) %>%
-
-  # Remove header text from logo columns
   cols_label(
     team_logo_wiki = "",
     lt_grade = "LT", lg_grade = "LG", ce_grade = "C", rg_grade = "RG", rt_grade = "RT",
     team_logo_wiki_r = "",
     lt_grade_r = "LT", lg_grade_r = "LG", ce_grade_r = "C", rg_grade_r = "RG", rt_grade_r = "RT"
   ) %>%
-
-  # Column widths
   cols_width(
     starts_with("team_logo_wiki") ~ px(70),
     starts_with("lt") ~ px(55),
@@ -191,14 +176,10 @@ gt_table <- split_table %>%
     starts_with("rg") ~ px(55),
     starts_with("rt") ~ px(55)
   ) %>%
-
-  # Number formatting
   fmt_number(
     columns = matches("grade"),
     decimals = 1
   ) %>%
-
-  # Color scale
   data_color(
       columns = matches("grade"),
       colors = scales::col_numeric(
